@@ -1,4 +1,4 @@
-/* Main stylesheet for Portfolio v2 */
+/* Main stylesheet */
 
 * {
     margin: 0;
@@ -9,42 +9,143 @@
 body {
     font-family: 'IBM Plex Sans', sans-serif;
     background-color: #000000;
-    min-height: 200vh;
+    min-height: 100vh;
     position: relative;
     overflow-x: hidden;
 }
 
-.die-background {
-    display: none;
+.silver-shimmer {
+  pointer-events: none;
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 12;
+  opacity: 0.12;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.18) 0%,
+    rgba(200,200,255,0.10) 15%,
+    rgba(180,255,255,0.10) 30%,
+    rgba(180,255,200,0.10) 45%,
+    rgba(255,255,180,0.10) 60%,
+    rgba(255,200,200,0.10) 75%,
+    rgba(255,255,255,0.18) 100%
+  );
+  background-size: 200% 200%;
+  mix-blend-mode: lighten;
+  transition: background-position 0.2s;
+}
+
+.die-faint {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 5;
+    background: url('../assets/images/ryzen5_9600x_die_bluesmall.png') center center / 200% 200% no-repeat;
+    opacity: 0.18;
+    mask-image: radial-gradient(circle at 50% 50%, white 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, white 40%, transparent 100%);
+}
+
+.die-reveal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 10;
+    background: url('../assets/images/ryzen5_9600x_die_bluesmall.png') center center / 200% 200% no-repeat;
+    opacity: 0.32;
+    mask-image: 
+        radial-gradient(circle at 50% 50%, white 40%, transparent 100%),
+        radial-gradient(ellipse 350px 350px at 50% 50%, white 0%, white 20%, transparent 100%);
+    -webkit-mask-image: 
+        radial-gradient(circle at 50% 50%, white 40%, transparent 100%),
+        radial-gradient(ellipse 350px 350px at 50% 50%, white 0%, white 20%, transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-size: 100vw 100vh;
+    -webkit-mask-size: 100vw 100vh;
+    transition: mask-image 0.1s, -webkit-mask-image 0.1s;
 }
 
 .title-block {
     position: relative;
-    z-index: 2;
+    z-index: 20;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     text-align: center;
-    transform: translateY(0);
-    transition: transform 0.1s ease-out;
+    transform: none;
+    transition: none;
+    padding: 0 2rem;
 }
 
-.title-block h1 {
+.title-block h1,
+.title-block h1::after {
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 700;
     font-size: 8rem;
-    color: transparent;
     letter-spacing: -0.02em;
-    line-height: 1.1;
-    background-image: url('../assets/images/ryzen5_9600x_die_bluesmall.png');
-    background-size: cover;
-    background-position: center bottom;
+    line-height: 1;
+    display: inline-block;
+    padding-bottom: 0.2em;
+    padding-right: 0.2em;
+    text-rendering: geometricPrecision;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+}
+
+.title-block h1 {
+    color: #ffffff;
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    -webkit-text-fill-color: initial;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.title-block h1::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0; top: 0; width: 100%; height: 100%;
+    color: transparent;
+    background: linear-gradient(0deg, #0a2342 0%, #1e90ff 60%, #00eaff 100%);
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-position: center;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.title-block h1:hover::after {
+    opacity: 1;
+}
+
+.description {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: #ffffff;
+    line-height: 1.6;
+    max-width: 60ch;
+    margin-top: 2rem;
+    text-align: center;
+    opacity: 0.85;
 }
 
 .container {
