@@ -19,6 +19,7 @@ body {
     word-break: break-all;
     user-select: none;
     pointer-events: none;
+    display: none; /* Initially hidden */
     /* This mask makes the text only visible within the spotlight */
     mask-image: radial-gradient(600px circle at var(--x) var(--y), black, transparent 50%);
     -webkit-mask-image: radial-gradient(600px circle at var(--x) var(--y), black, transparent 50%);
@@ -173,7 +174,7 @@ body {
 }
 
 .note-content {
-    padding: 0 1.5rem 1.5rem 2.5rem; /* Indent content */
+    padding: 1.5rem 1.5rem 1.5rem 2.5rem; /* Added top padding to match bottom */
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     overflow: hidden;
     transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
@@ -261,23 +262,32 @@ body {
 /* Use a smaller spotlight on smaller screens for mouse devices */
 @media (max-width: 768px) {
     #binary-background {
-        mask-image: radial-gradient(300px circle at var(--x) var(--y), black, transparent 50%);
-        -webkit-mask-image: radial-gradient(300px circle at var(--x) var(--y), black, transparent 50%);
+        font-size: 10px; /* Smaller text on mobile */
     }
     #mouse-spotlight {
-        background: radial-gradient(300px circle at var(--x) var(--y), rgba(79, 70, 229, 0.07), transparent 80%);
+        background: radial-gradient(400px circle at var(--x) var(--y), rgba(79, 70, 229, 0.1), transparent 80%);
     }
 }
 
 /* --- Circuit Trace Styles --- */
 #circuit-traces-svg {
-    z-index: 1; /* Position between background and content */
+    display: none; /* Hide on mobile by default */
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1; /* Below glass effect but above background */
+}
+
+@media (min-width: 640px) { /* sm breakpoint, show on larger screens */
+    #circuit-traces-svg {
+        display: block;
+    }
 }
 
 .trace-path {
+    stroke: rgba(79, 70, 229, 0.3); /* Purple, semi-transparent */
+    stroke-width: 2px;
     fill: none;
-    stroke: rgba(79, 70, 229, 0.6); /* Purple trace color */
-    stroke-width: 1.5px; /* Medium thickness */
     /* Soft glow effect using a drop-shadow filter */
     filter: drop-shadow(0 0 5px rgba(79, 70, 229, 0.8));
 }

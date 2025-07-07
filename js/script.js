@@ -4,15 +4,6 @@ if (isTouchDevice) {
     document.body.classList.add('touch-device');
 }
 
-// --- Mouse Spotlight Effect ---
-// Only add the event listener if it's not a touch device
-if (!isTouchDevice) {
-    window.addEventListener('mousemove', e => {
-        document.documentElement.style.setProperty('--x', e.clientX + 'px');
-        document.documentElement.style.setProperty('--y', e.clientY + 'px');
-    });
-}
-
 // --- Binary Background Effect ---
 const binaryContainer = document.getElementById('binary-background');
 let binaryInterval;
@@ -27,8 +18,24 @@ const generateBinary = () => {
 };
 
 const startBinaryAnimation = () => {
+    // Make the container visible before starting
+    if (binaryContainer) {
+        binaryContainer.style.display = 'block';
+    }
     generateBinary();
     binaryInterval = setInterval(generateBinary, 200); // Update every 200ms
+}
+
+// --- Mouse Spotlight Effect ---
+// Only add the event listener if it's not a touch device
+if (!isTouchDevice) {
+    window.addEventListener('mousemove', e => {
+        document.documentElement.style.setProperty('--x', e.clientX + 'px');
+        document.documentElement.style.setProperty('--y', e.clientY + 'px');
+    });
+
+    // Start the binary animation only on the first mousemove
+    window.addEventListener('mousemove', startBinaryAnimation, { once: true });
 }
 
 // --- Sticky Header Effect ---
@@ -43,64 +50,17 @@ window.addEventListener('scroll', () => {
 
 // Start animation when the window is loaded
 window.addEventListener('load', () => {
-    startBinaryAnimation();
+    // The binary animation is now started by mouse movement
     // Set initial header state with cursor
     header.innerHTML = 'BEN PEGG<span class="cursor-block"></span>';
 });
 // Regenerate on resize
-window.addEventListener('resize', generateBinary);
-
-
-// --- Interactive Header Effect ---
-const header = document.getElementById('main-header');
-const originalText = "BEN PEGG";
-const asciiText = "66 69 78 32 80 69 71 71";
-let isAnimating = false;
-let isAsciiMode = false; // State variable to track current text
-
-const runAnimation = (startText, endText) => {
-    isAnimating = true;
-    let currentIndex = startText.length;
-
-    // Recursive function for deleting characters
-    const deleteChar = () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            header.innerHTML = startText.substring(0, currentIndex) + '<span class="cursor-block"></span>';
-            setTimeout(deleteChar, 50); // Fast, consistent delete speed
-        } else {
-            // Deleting finished, start typing
-            typeChar(0);
-        }
-    };
-
-    // Recursive function for typing characters with random delay
-    const typeChar = (index) => {
-        if (index < endText.length) {
-            header.innerHTML = endText.substring(0, index + 1) + '<span class="cursor-block"></span>';
-            const delay = Math.random() * 100 + 50; // Random delay between 50ms and 150ms
-            setTimeout(() => typeChar(index + 1), delay);
-        } else {
-            // Typing finished, animation is complete
-            isAnimating = false;
-        }
-    };
-
-    deleteChar(); // Start the animation chain
-};
-
-const toggleHeaderAnimation = () => {
-    if (isAnimating) return;
-
-    const fromText = isAsciiMode ? asciiText : originalText;
-    const toText = isAsciiMode ? originalText : asciiText;
-
-    isAsciiMode = !isAsciiMode; // Toggle the state for the next hover
-    runAnimation(fromText, toText);
-};
-
-// Changed to 'click' to work on mobile devices
-header.addEventListener('click', toggleHeaderAnimation);
+window.addEventListener('resize', () => {
+    // Only regenerate if the animation has already started
+    if (binaryInterval) {
+        generateBinary();
+    }
+});
 
 
 // --- Scroll Animation Observer ---
