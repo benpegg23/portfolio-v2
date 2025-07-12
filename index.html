@@ -68,18 +68,16 @@
                 <div class="space-y-4">
                     <!-- Project: ParPad -->
                     <div class="glass-effect flex flex-col md:flex-row gap-6 p-4 rounded-lg group">
-                        <!-- Left side: image and details -->
-                        <div class="flex-shrink-0 flex flex-col justify-between">
-                            <img src="assets/images/ParPad_HeadOn.png" alt="ParPad macropad" class="w-48 rounded-lg">
-                            <div class="text-sm text-gray-400 mt-4">
-                                <p>C, STM32, KiCad</p>
-                            </div>
+                        <!-- Left side: image -->
+                        <div class="flex-shrink-0"> <!-- Removed flex classes, not needed here -->
+                            <img src="assets/images/ParPad_HeadOn.png" alt="ParPad macropad" class="w-full md:w-48 rounded-lg mb-4 md:mb-0">
                         </div>
                         <!-- Right side: description -->
-                        <div class="flex-1 mt-4 md:mt-0 flex flex-col justify-between">
-                            <div>
-                                <h3 class="font-medium text-white mb-2 text-lg">ParPad</h3>
-                                <p class="text-sm leading-relaxed">
+                        <div class="flex-1 md:mt-0 flex flex-col justify-between">
+                            <div class="flex flex-col"> <!-- New container for reordering -->
+                                <h3 class="font-medium text-white mb-2 text-lg project-title">ParPad</h3>
+                                <p class="text-sm text-gray-400 mb-4 project-tags">C, STM32, KiCad</p>
+                                <p class="text-sm leading-relaxed project-description">
                                     3x3 macropad with two rotary encoders, built using an STM32 microcontroller. PCB designed in KiCad, runs custom QMK-based firmware written in C allowing for fully programmable keys and custom macros.
                                 </p>
                             </div>

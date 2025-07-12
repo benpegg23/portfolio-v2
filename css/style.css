@@ -67,6 +67,10 @@ body {
     overflow: hidden;   /* Contain the blobs within the rounded corners */
 }
 
+#main-header:hover {
+    cursor: pointer;
+}
+
 /* Liquid Glass Card Effect */
 .glass-effect {
     /* The parent is now just a positioning container for the pseudo-elements */
@@ -269,11 +273,17 @@ body {
 /* Use a smaller spotlight on smaller screens for mouse devices */
 @media (max-width: 768px) {
     #binary-background {
-        font-size: 10px; /* Smaller text on mobile */
+        font-size: 10px; /* Even smaller on mobile for performance */
     }
     #mouse-spotlight {
-        background: radial-gradient(400px circle at var(--x) var(--y), rgba(79, 70, 229, 0.1), transparent 80%);
+        /* On mobile, make the spotlight a static, subtle gradient from the top */
+        background: radial-gradient(circle at 50% -20%, rgba(79, 70, 229, 0.1), transparent 50%);
     }
+
+    /* Reorder project card elements on mobile */
+    .project-title { order: 1; }
+    .project-tags { order: 2; }
+    .project-description { order: 3; }
 }
 
 /* --- Circuit Trace Styles --- */

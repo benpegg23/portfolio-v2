@@ -54,20 +54,35 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Start animation when the window is loaded
-window.addEventListener('load', () => {
-    // The binary animation is now started by mouse movement
-    // Set initial header state with cursor
-    header.innerHTML = 'BEN PEGG<span class="cursor-block"></span>';
-});
-// Regenerate on resize
-window.addEventListener('resize', () => {
-    // Only regenerate if the animation has already started
-    if (binaryInterval) {
-        generateBinary();
-    }
-});
+// --- Homepage Header Typing Animation ---
+function typeEffect(element, text, isDeleting, callback) {
+    let i = isDeleting ? text.length - 1 : 0;
+    const cursor = '<span class="cursor-block"></span>';
+    let delay = isDeleting ? 30 : 60; // Deleting is faster
 
+    function type() {
+        const randomJitter = Math.random() * 40 - 20; // -20ms to +20ms jitter
+        if (isDeleting) {
+            if (i >= 0) {
+                element.innerHTML = text.substring(0, i) + cursor;
+                i--;
+                setTimeout(type, delay + randomJitter);
+            } else {
+                element.innerHTML = cursor;
+                if (callback) callback();
+            }
+        } else {
+            if (i < text.length) {
+                element.innerHTML = text.substring(0, i + 1) + cursor;
+                i++;
+                setTimeout(type, delay + randomJitter);
+            } else {
+                if (callback) callback();
+            }
+        }
+    }
+    type();
+}
 
 // --- Scroll Animation Observer ---
 const observer = new IntersectionObserver((entries) => {
@@ -178,47 +193,21 @@ document.querySelectorAll('.glass-effect').forEach(card => {
     });
 });
 
-// --- Smooth Notes Dropdown Animations ---
-document.querySelectorAll('.course-item').forEach(item => {
-    const summary = item.querySelector('summary');
-    const content = item.querySelector('.note-content');
-    
-    // Set initial states
-    if (item.hasAttribute('open')) {
-        content.classList.add('open');
-    } else {
-        content.classList.add('closed');
-    }
-    
-    summary.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent default details behavior
-        
-        if (item.hasAttribute('open')) {
-            // Close the item
-            content.classList.remove('open');
-            content.classList.add('closed');
-            summary.querySelector('::before')?.style.setProperty('transform', 'rotate(0deg)');
-            
-            // Wait for animation to complete before removing 'open' attribute
-            setTimeout(() => {
-                item.removeAttribute('open');
-            }, 300);
-        } else {
-            // Open the item
-            item.setAttribute('open', '');
-            content.classList.remove('closed');
-            content.classList.add('open');
-        }
-    });
-});
-
 // --- Function to handle opening a specific 'details' element based on URL hash ---
 function openDetailsFromHash() {
     const hash = window.location.hash;
     if (hash) {
         const targetElement = document.querySelector(hash);
         if (targetElement && targetElement.tagName.toLowerCase() === 'details') {
-            targetElement.open = true;
+            targetElement.setAttribute('open', '');
+            
+            // Re-run the animation logic after opening
+            const content = targetElement.querySelector('.note-content');
+            if (content) {
+                content.classList.remove('closed');
+                content.classList.add('open');
+            }
+
             // Optional: scroll the element into view
             targetElement.scrollIntoView({ behavior: 'smooth' });
         }
@@ -227,20 +216,90 @@ function openDetailsFromHash() {
 
 // --- Run all initializations on DOMContentLoaded ---
 document.addEventListener('DOMContentLoaded', () => {
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints;
 
-    // Initialize background effects only on non-touch devices
-    if (!isTouchDevice) {
-        initializeMouseEffects();
-    } else {
-        document.body.classList.add('touch-device');
+    // --- Header Animation Logic (Homepage Only) ---
+    const header = document.getElementById('main-header');
+    const isHomePage = window.location.pathname === '/index.html' || window.location.pathname === '/' || window.location.pathname === '/portfoliov2/';
+
+    let isAnimating = false;
+
+    const codeSnippets = [
+        'printf("Ben Pegg");',
+        'std::cout << "Ben Pegg";',
+        'print("Ben Pegg")',
+        'System.out.println("Ben Pegg");',
+        '.STRINGZ "Ben Pegg"',
+        'initial $display("Ben Pegg");'
+    ];
+
+    if (header) {
+        // Always set initial state with cursor
+        header.innerHTML = 'BEN PEGG<span class="cursor-block"></span>';
+
+        if (isHomePage) {
+            header.addEventListener('click', () => {
+                if (isAnimating) return;
+                isAnimating = true;
+
+                const originalText = "BEN PEGG";
+                // Select a random snippet
+                const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+
+                // 1. Delete "BEN PEGG"
+                typeEffect(header, originalText, true, () => {
+                    // 2. Type random code snippet
+                    setTimeout(() => { // Pause before typing next
+                        typeEffect(header, randomSnippet, false, () => {
+                            // 3. Pause, then delete snippet
+                            setTimeout(() => {
+                                typeEffect(header, randomSnippet, true, () => {
+                                    // 4. Type "BEN PEGG" again
+                                    setTimeout(() => { // Pause before typing final
+                                        typeEffect(header, originalText, false, () => {
+                                            isAnimating = false; // Animation finished
+                                        });
+                                    }, 200);
+                                });
+                            }, 1000); // Pause for 1s
+                        });
+                    }, 200);
+                });
+            });
+        }
     }
 
-    // Initialize UI components
-    initializeScrollAnimations();
-    initializeGlassEffects();
-    initializeStickyHeader();
-    initializeCircuitAnimation();
+    // --- Note Dropdowns ---
+    document.querySelectorAll('.course-item').forEach(item => {
+        const summary = item.querySelector('summary');
+        const content = item.querySelector('.note-content');
+        
+        // Set initial states
+        if (item.hasAttribute('open')) {
+            content.classList.add('open');
+        } else {
+            content.classList.add('closed');
+        }
+        
+        summary.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default details behavior
+            
+            if (item.hasAttribute('open')) {
+                // Close the item
+                content.classList.remove('open');
+                content.classList.add('closed');
+                
+                // Wait for animation to complete before removing 'open' attribute
+                setTimeout(() => {
+                    item.removeAttribute('open');
+                }, 300);
+            } else {
+                // Open the item
+                item.setAttribute('open', '');
+                content.classList.remove('closed');
+                content.classList.add('open');
+            }
+        });
+    });
 
     // Handle opening notes from hash
     openDetailsFromHash();
