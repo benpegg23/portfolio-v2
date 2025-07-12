@@ -130,6 +130,13 @@ body {
     position: relative;
     display: inline-block;
 }
+
+/* This specifically targets the links that have an arrow icon inside them */
+.link-underline:has(img) {
+    display: inline-flex;
+    align-items: center;
+}
+
 .link-underline::after {
     content: '';
     position: absolute;
@@ -238,7 +245,7 @@ body {
 }
 .cursor-block {
     display: inline-block;
-    width: 0.6em; /* Width of the block cursor */
+    width: 0.5em; /* Width of the block cursor */
     height: 1.1em; /* Height of the block cursor */
     animation: blink 1s step-end infinite;
     vertical-align: -0.15em; /* Nudge cursor up slightly */
@@ -307,4 +314,32 @@ body {
     to {
         --gradient-angle: 360deg;
     }
+}
+
+/* Custom properties for circuit animation */
+:root {
+    --circuit-animation-duration: 5s;
+}
+
+/* Note Card gradient hotspots */
+.note-card.glass-effect::before {
+    /* Hotspots are hidden until hover */
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+    background:
+        radial-gradient(220px circle at 25% 30%, rgba(79,70,229,0.45), transparent 70%),
+        radial-gradient(280px circle at 75% 65%, rgba(129,140,248,0.45), transparent 70%);
+}
+
+.note-card.glass-effect:hover::before {
+    opacity: 1;
+}
+
+/* Base gradient for note cards (black to purple) */
+.note-card.glass-effect::after {
+    background: rgba(10, 10, 10, 0.5); /* Black background by default */
+    transition: background 0.4s ease-out;
+}
+.note-card.glass-effect:hover::after {
+    background: linear-gradient(145deg, rgba(10,10,10,0.6) 0%, rgba(63,56,156,0.6) 100%);
 }

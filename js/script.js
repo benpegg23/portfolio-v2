@@ -205,3 +205,37 @@ document.querySelectorAll('.course-item').forEach(item => {
         }
     });
 });
+
+// --- Function to handle opening a specific 'details' element based on URL hash ---
+function openDetailsFromHash() {
+    const hash = window.location.hash;
+    if (hash) {
+        const targetElement = document.querySelector(hash);
+        if (targetElement && targetElement.tagName.toLowerCase() === 'details') {
+            targetElement.open = true;
+            // Optional: scroll the element into view
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+}
+
+// --- Run all initializations on DOMContentLoaded ---
+document.addEventListener('DOMContentLoaded', () => {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints;
+
+    // Initialize background effects only on non-touch devices
+    if (!isTouchDevice) {
+        initializeMouseEffects();
+    } else {
+        document.body.classList.add('touch-device');
+    }
+
+    // Initialize UI components
+    initializeScrollAnimations();
+    initializeGlassEffects();
+    initializeStickyHeader();
+    initializeCircuitAnimation();
+
+    // Handle opening notes from hash
+    openDetailsFromHash();
+});
