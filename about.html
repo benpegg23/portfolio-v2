@@ -26,8 +26,48 @@
             </nav>
         </header>
         <main class="mt-12">
-            <h1 class="text-2xl font-bold text-white">About Me</h1>
-            <!-- About page content goes here -->
+            <!-- About Section -->
+            <section id="about" class="mb-16 scroll-animate">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <!-- Profile Picture -->
+                    <div class="flex-shrink-0">
+                        <img src="../assets/images/sunset_pic.jpeg" alt="Ben Pegg profile picture" class="profile-pic rounded-full w-48 h-48 object-cover shadow-lg">
+                    </div>
+                    <!-- Bio & Links -->
+                    <div class="flex-1 text-center md:text-left">
+                        <h1 class="text-4xl font-bold text-white mb-6">Ben Pegg</h1>
+                        <!-- Social Links -->
+                        <div class="flex justify-center md:justify-start flex-wrap gap-4">
+                            <a href="https://www.linkedin.com/in/benpegg/" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+                            <a href="https://github.com/benpegg23" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
+                            <a href="mailto:benpegg23@gmail.com" class="social-link">Email</a>
+                            <a href="#" class="social-link">Resume (coming soon)</a>
+                            <a href="https://www.instagram.com/bypphotos" target="_blank" rel="noopener noreferrer" class="social-link">Photography</a>
+                            <a href="https://monkeytype.com/profile/hyperpenguin" target="_blank" rel="noopener noreferrer" class="social-link">Monkeytype</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Course Highlights Section -->
+            <section id="courses" class="scroll-animate">
+                <h2 class="text-2xl font-bold text-white mb-8">Course Highlights</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 course-list">
+                    <p>ECE 385: Digital Systems Laboratory</p>
+                    <p>CS 225: Data Structures and Algorithms</p>
+                    <p>ECE 220: Computer Systems & Programming</p>
+                    <p>ECE 210: Analog Signal Processing</p>
+                    <p>CS 173: Discrete Structures</p>
+                    <p>ECE 120: Introduction to Computing</p>
+                    <p>ECE 110: Introduction to Electronics</p>
+                    <p>MATH 285: Intro to Differential Equations</p>
+                    <p>MATH 257: Linear Algebra w/ Computational Applications</p>
+                    <p>MATH 241: Calculus III</p>
+                    <p>PHYS 214: Quantum Physics</p>
+                    <p>PHYS 213: Thermal Physics</p>
+                    <p>PHYS 212: Electricity & Magnetism</p>
+                </div>
+            </section>
         </main>
         <footer id="contact" class="mt-20 pt-8 border-t border-custom scroll-animate">
             <h2 class="text-sm font-semibold text-white mb-6 tracking-widest section-title">CONTACT</h2>

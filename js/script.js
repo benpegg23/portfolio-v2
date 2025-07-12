@@ -41,17 +41,24 @@ if (!isTouchDevice) {
 // --- Sticky Header Effect ---
 const headerBar = document.getElementById('main-header-bar');
 let headerIsScrolled = false;
-const SCROLL_ADD = 20;  // point to add class
-const SCROLL_REMOVE = 10; // point to remove class
+let scrollTimeout;
+const SCROLL_ADD = 50;  // point to add class (increased significantly)
+const SCROLL_REMOVE = 0; // point to remove class (set to top)
+
 window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (!headerIsScrolled && y > SCROLL_ADD) {
-        headerIsScrolled = true;
-        headerBar.classList.add('header-scrolled');
-    } else if (headerIsScrolled && y < SCROLL_REMOVE) {
-        headerIsScrolled = false;
-        headerBar.classList.remove('header-scrolled');
-    }
+    // Clear any existing timeout to debounce rapid scroll events
+    clearTimeout(scrollTimeout);
+    
+    scrollTimeout = setTimeout(() => {
+        const y = window.scrollY;
+        if (!headerIsScrolled && y > SCROLL_ADD) {
+            headerIsScrolled = true;
+            headerBar.classList.add('header-scrolled');
+        } else if (headerIsScrolled && y <= SCROLL_REMOVE) {
+            headerIsScrolled = false;
+            headerBar.classList.remove('header-scrolled');
+        }
+    }, 10); // Small delay to prevent rapid state changes
 });
 
 // --- Homepage Header Typing Animation ---
@@ -154,7 +161,7 @@ window.addEventListener('load', () => {
 });
 
 // --- Mouse-reacting blob effect ---
-document.querySelectorAll('.glass-effect').forEach(card => {
+document.querySelectorAll('.glass-effect:not(.note-card)').forEach(card => {
     const initialPos = {
         blob1: { x: 0, y: 30 },
         blob2: { x: 100, y: 70 }
@@ -303,4 +310,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle opening notes from hash
     openDetailsFromHash();
+
+    // --- Clickable Project Cards ---
+    document.querySelectorAll('.clickable-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Do not navigate if a link inside the card was clicked
+            if (e.target.closest('a')) {
+                return;
+            }
+            window.location.href = this.dataset.href;
+        });
+    });
 });

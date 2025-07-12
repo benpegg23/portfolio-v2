@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Ben Pegg</title>
+    <title>ParPad Writeup - Ben Pegg</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,38 +26,32 @@
             </nav>
         </header>
         <main class="mt-12">
-            <h1 class="text-2xl font-bold text-white mb-8">Projects</h1>
-            <section id="projects" class="mb-16 scroll-animate">
-                <div class="space-y-4">
-                    <!-- Project: ParPad -->
-                    <div class="glass-effect flex flex-col md:flex-row gap-6 p-4 rounded-lg group clickable-card" data-href="/projects/parpad.html">
-                        <!-- Left side: image -->
-                        <div class="flex-shrink-0">
-                            <img src="../assets/images/ParPad_HeadOn.png" alt="ParPad macropad" class="w-full md:w-48 rounded-lg mb-4 md:mb-0">
-                        </div>
-                        <!-- Right side: description -->
-                        <div class="flex-1 md:mt-0 flex flex-col justify-between">
-                            <div class="flex flex-col"> <!-- New container for reordering -->
-                                <h3 class="font-medium text-white mb-2 text-lg project-title">ParPad</h3>
-                                <p class="text-sm text-gray-400 mb-4 project-tags">C, STM32, KiCad</p>
-                                <p class="text-sm leading-relaxed project-description">
-                                    3x3 macropad with two rotary encoders, built using an STM32 microcontroller. PCB designed in KiCad, runs custom QMK-based firmware written in C allowing for fully programmable keys and custom macros.
-                                </p>
-                            </div>
-                            <div class="flex items-center gap-x-6 mt-4">
-                                <a href="https://github.com/benpegg23/ParPad" target="_blank" rel="noopener noreferrer" class="flex items-center gap-x-2 link-underline text-sm text-gray-300 hover:text-white">
-                                    GITHUB
-                                    <img src="../assets/icons/outward_arrow_white.png" alt="arrow icon" class="w-3 h-3">
-                                </a>
-                                <a href="/projects/parpad.html" class="flex items-center gap-x-2 link-underline text-sm text-gray-300 hover:text-white">
-                                    WRITEUP
-                                    <img src="../assets/icons/outward_arrow_white.png" alt="arrow icon" class="w-3 h-3">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Left-aligned Title -->
+            <h1 class="text-3xl font-bold text-white mb-8">ParPad</h1>
+            
+            <!-- Banner Image -->
+            <div class="mb-8"> <!-- Reduced margin-bottom from 12 to 8 -->
+                <img src="../assets/images/ParPad_Banner.png" alt="ParPad macropad banner" class="w-full rounded-lg shadow-lg">
+            </div>
+
+            <!-- Main Content -->
+            <div class="max-w-3xl space-y-8 text-base leading-relaxed"> <!-- Increased space between content blocks -->
+                <p class="text-gray-400">
+                    3x3 macropad with two rotary encoders, built using an STM32 microcontroller. PCB designed in KiCad, runs custom QMK-based firmware written in C allowing for fully programmable keys and custom macros.
+                </p>
+
+                <!-- Meta Info -->
+                <div class="space-y-2"> <!-- Removed redundant mt-8 -->
+                    <p>
+                        <a href="https://github.com/benpegg23/ParPad" target="_blank" rel="noopener noreferrer" class="note-link">Github Repo</a>
+                    </p>
+                    <p class="text-sm text-gray-400">July 2025</p>
                 </div>
-            </section>
+
+                <div> <!-- Removed redundant mt-12 -->
+                    <p class="italic text-gray-400">Writeup coming soon</p>
+                </div>
+            </div>
         </main>
         <footer id="contact" class="mt-20 pt-8 border-t border-custom scroll-animate">
             <h2 class="text-sm font-semibold text-white mb-6 tracking-widest section-title">CONTACT</h2>
@@ -71,7 +65,7 @@
                    <span class="link-underline">GITHUB</span>
                </a>
                 <a href="https://www.linkedin.com/in/benpegg/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4"cy="4" r="2"></circle></svg>
+                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                    <span class="link-underline">LINKEDIN</span>
                </a>
             </div>

@@ -71,6 +71,59 @@ body {
     cursor: pointer;
 }
 
+.clickable-card {
+    cursor: pointer;
+}
+
+.social-link {
+    position: relative; /* For pseudo-element positioning */
+    overflow: hidden;   /* To contain the gradient */
+    z-index: 1;         /* Ensures content is above the pseudo-element */
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    color: #E0E0E0;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-link:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: 
+        radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.4), transparent 50%),
+        radial-gradient(circle at 85% 50%, rgba(79, 70, 229, 0.4), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-link:hover::before {
+    opacity: 1;
+}
+
+.course-list p {
+    position: relative;
+    padding-left: 1.5rem;
+    color: #a0aec0; /* Lighter gray for course text */
+}
+
+.course-list p::before {
+    content: '»';
+    position: absolute;
+    left: 0;
+    color: #a5b4fc; /* Purple accent color for the bullet */
+}
+
 /* Liquid Glass Card Effect */
 .glass-effect {
     /* The parent is now just a positioning container for the pseudo-elements */
@@ -335,21 +388,22 @@ body {
 .note-card.glass-effect::before {
     /* Hotspots are hidden until hover */
     opacity: 0;
-    transition: opacity 0.4s ease-out;
-    background:
-        radial-gradient(220px circle at 25% 30%, rgba(79,70,229,0.45), transparent 70%),
-        radial-gradient(280px circle at 75% 65%, rgba(129,140,248,0.45), transparent 70%);
+    /* Only transition opacity for note cards, make it faster on exit */
+    transition: opacity 0.25s ease-in-out; /* Faster fade in/out */
+    /* Single, centered blob using the same purple from the ParPad banner */
+    background: radial-gradient(120px circle at center, rgba(79, 70, 229, 0.7), transparent 70%);
 }
 
 .note-card.glass-effect:hover::before {
     opacity: 1;
+    /* No longer needed, using single transition property now */
 }
+
 
 /* Base gradient for note cards (black to purple) */
 .note-card.glass-effect::after {
-    background: rgba(10, 10, 10, 0.5); /* Black background by default */
-    transition: background 0.4s ease-out;
+    /* Keep a constant dark backdrop; leave the purple effect to the ::before layer */
+    background: rgba(10, 10, 10, 0.5);
+    /* Remove background transition to avoid flash when gradients are not interpolatable */
 }
-.note-card.glass-effect:hover::after {
-    background: radial-gradient(circle, rgba(63, 56, 156, 0.5) 0%, rgba(10, 10, 10, 0.7) 80%);
-}
+/* No hover change needed for ::after; the ::before layer handles the purple effect */
