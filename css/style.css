@@ -198,7 +198,7 @@ body {
 
 /* Open state */
 .note-content.open {
-    max-height: 500px;
+    max-height: 1500px; /* Increased from 500px to accommodate more content */
     opacity: 1;
 }
 
@@ -341,5 +341,5 @@ body {
     transition: background 0.4s ease-out;
 }
 .note-card.glass-effect:hover::after {
-    background: linear-gradient(145deg, rgba(10,10,10,0.6) 0%, rgba(63,56,156,0.6) 100%);
+    background: radial-gradient(circle, rgba(63, 56, 156, 0.5) 0%, rgba(10, 10, 10, 0.7) 80%);
 }

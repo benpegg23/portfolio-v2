@@ -40,10 +40,16 @@ if (!isTouchDevice) {
 
 // --- Sticky Header Effect ---
 const headerBar = document.getElementById('main-header-bar');
+let headerIsScrolled = false;
+const SCROLL_ADD = 20;  // point to add class
+const SCROLL_REMOVE = 10; // point to remove class
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
+    const y = window.scrollY;
+    if (!headerIsScrolled && y > SCROLL_ADD) {
+        headerIsScrolled = true;
         headerBar.classList.add('header-scrolled');
-    } else {
+    } else if (headerIsScrolled && y < SCROLL_REMOVE) {
+        headerIsScrolled = false;
         headerBar.classList.remove('header-scrolled');
     }
 });
