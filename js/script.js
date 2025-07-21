@@ -17,21 +17,6 @@ const generateBinary = () => {
     binaryContainer.textContent = binaryString;
 };
 
-// Hide all purple effects during resize to prevent artifacts
-let resizeEffectsTimer;
-window.addEventListener('resize', () => {
-    // Add a class to disable all purple effects
-    document.body.classList.add('resizing');
-    
-    clearTimeout(resizeEffectsTimer);
-    resizeEffectsTimer = setTimeout(() => {
-        document.body.classList.remove('resizing');
-        if (binaryContainer) {
-            generateBinary(); // Regenerate for new window size
-        }
-    }, 250);
-});
-
 const startBinaryAnimation = () => {
     // Make the container visible before starting
     if (binaryContainer) {
@@ -122,8 +107,7 @@ const elements = document.querySelectorAll('.scroll-animate');
 elements.forEach(el => observer.observe(el));
 
 
-// --- SVG Circuit Traces ---
-// Changed to 'load' to ensure all assets (like fonts) are loaded before calculating element positions
+// --- SVG Circuit Traces & Unified Resize Handler ---
 window.addEventListener('load', () => {
     const svg = document.getElementById('circuit-traces-svg');
     const headerEl = document.getElementById('main-header');
@@ -164,15 +148,22 @@ window.addEventListener('load', () => {
         });
     };
 
-    // Recalculate on resize
+    // --- Unified Resize Handler ---
     let resizeTimer;
     window.addEventListener('resize', () => {
+        document.body.classList.add('resizing');
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(createTraces, 250);
+        resizeTimer = setTimeout(() => {
+            // createTraces(); // Redraw traces first
+            if (binaryContainer) {
+                generateBinary(); // Then regenerate binary background
+            }
+            document.body.classList.remove('resizing');
+        }, 250);
     });
 
     // Initial creation
-    createTraces();
+    // createTraces();
 });
 
 // --- Mouse-reacting blob effect ---
