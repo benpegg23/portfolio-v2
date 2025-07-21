@@ -17,6 +17,21 @@ const generateBinary = () => {
     binaryContainer.textContent = binaryString;
 };
 
+// Hide all purple effects during resize to prevent artifacts
+let resizeEffectsTimer;
+window.addEventListener('resize', () => {
+    // Add a class to disable all purple effects
+    document.body.classList.add('resizing');
+    
+    clearTimeout(resizeEffectsTimer);
+    resizeEffectsTimer = setTimeout(() => {
+        document.body.classList.remove('resizing');
+        if (binaryContainer) {
+            generateBinary(); // Regenerate for new window size
+        }
+    }, 250);
+});
+
 const startBinaryAnimation = () => {
     // Make the container visible before starting
     if (binaryContainer) {

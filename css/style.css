@@ -346,6 +346,7 @@ body {
     inset: 0;
     pointer-events: none;
     z-index: 1; /* Below glass effect but above background */
+    transition: opacity 0.2s ease-in-out; /* Smooth fade for resize operations */
 }
 
 @media (min-width: 640px) { /* sm breakpoint, show on larger screens */
@@ -407,3 +408,19 @@ body {
     /* Remove background transition to avoid flash when gradients are not interpolatable */
 }
 /* No hover change needed for ::after; the ::before layer handles the purple effect */
+
+/* Disable all purple effects during window resize to prevent artifacts */
+.resizing #binary-background,
+.resizing #mouse-spotlight,
+.resizing #circuit-traces-svg,
+.resizing .glass-effect::before,
+.resizing .glass-effect::after,
+.resizing .social-link::before,
+.resizing .note-card.glass-effect::before {
+    display: none !important;
+}
+
+.resizing .trace-path {
+    stroke: transparent !important;
+    filter: none !important;
+}
